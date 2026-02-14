@@ -1,0 +1,61 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Profiles: Users can read all (if public) but only edit their own
+    match /profiles/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(userId);
+      allow update, delete: if isOwner(userId);
+    }
+
+    // Goals: Only owner can access
+    match /goals/{goalId} {
+      allow read, write: if isSignedIn() && isOwner(resource.data.user_id || request.resource.data.user_id);
+    }
+
+    // Achievements: System-driven but users can read their own
+    match /user_achievements/{id} {
+      allow read: if isSignedIn() && isOwner(resource.data.userId);
+      allow create: if isSignedIn(); // In production, restrict this to Cloud Functions
+    }
+
+    // Notifications: Only owner can read/update
+    match /notifications/{id} {
+      allow read, update, delete: if isSignedIn() && isOwner(resource.data.user_id);
+      allow create: if isSignedIn(); // Or system-only
+    }
+
+    // Careers: Read-only for authenticated users
+    match /careers/{id} {
+      allow read: if isSignedIn();
+      allow write: if false; // Only via admin console or special role
+    }
+
+    // Courses: Read-only for authenticated users
+    match /courses/{id} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    // Enrollments
+    match /enrollments/{id} {
+      allow read: if isSignedIn() && isOwner(resource.data.userId);
+      allow write: if isSignedIn() && isOwner(request.resource.data.userId);
+    }
+    
+    // Default: deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

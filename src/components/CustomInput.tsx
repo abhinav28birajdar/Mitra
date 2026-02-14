@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity, TextInputProps, ViewStyle } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Theme } from '../theme';
+import React, { useState, useCallback, useMemo } from 'react';
+import {
+    View,
+    TextInput,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    TextInputProps,
+    ViewStyle,
+    Platform,
+    Animated
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useTheme } from '@context/ThemeContext';
 
 interface CustomInputProps extends TextInputProps {
     label?: string;
-    iconName?: keyof typeof Ionicons.glyphMap;
+    iconName?: string;
     error?: string;
     password?: boolean;
     containerStyle?: ViewStyle;
+    helperText?: string;
+    showCharacterCount?: boolean;
+    required?: boolean;
+    success?: boolean;
+    successMessage?: string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -19,104 +34,256 @@ const CustomInput: React.FC<CustomInputProps> = ({
     containerStyle,
     onFocus,
     onBlur,
+    value,
+    onChangeText,
+    multiline,
+    numberOfLines,
+    style: inputStyleOverride,
+    helperText,
+    showCharacterCount = false,
+    maxLength,
+    required = false,
+    success = false,
+    successMessage,
+    editable = true,
     ...props
 }) => {
+    const { theme } = useTheme();
     const [isFocused, setIsFocused] = useState(false);
     const [hidePassword, setHidePassword] = useState(password);
 
+    const handleFocus = useCallback((e: any) => {
+        setIsFocused(true);
+        onFocus?.(e);
+    }, [onFocus]);
+
+    const handleBlur = useCallback((e: any) => {
+        setIsFocused(false);
+        onBlur?.(e);
+    }, [onBlur]);
+
+    const togglePassword = useCallback(() => {
+        setHidePassword(prev => !prev);
+    }, []);
+
+    const characterCount = useMemo(() => value?.length || 0, [value]);
+
+    const borderColor = useMemo(() => {
+        if (!editable) return theme.colors.border.light;
+        if (error) return theme.colors.error.main;
+        if (success) return theme.colors.success?.main || '#10B981';
+        if (isFocused) return theme.colors.primary[600];
+        return theme.colors.border.light;
+    }, [error, success, isFocused, editable, theme]);
+
+    const iconColor = useMemo(() => {
+        if (!editable) return theme.colors.text.disabled;
+        if (error) return theme.colors.error.main;
+        if (success) return theme.colors.success?.main || '#10B981';
+        if (isFocused) return theme.colors.primary[600];
+        return theme.colors.text.disabled;
+    }, [error, success, isFocused, editable, theme]);
+
+    const isMultiline = !!multiline;
+    const minHeight = isMultiline ? 100 : 54;
+
+    const showSuccessIcon = success && !error && !password;
+    const showErrorIcon = error && !password;
+
     return (
         <View style={[styles.container, containerStyle]}>
-            {label && <Text style={styles.label}>{label}</Text>}
+            {label && (
+                <View style={styles.labelContainer}>
+                    <Text style={[styles.label, { color: theme.colors.text.secondary }]}>
+                        {label}
+                        {required && <Text style={{ color: theme.colors.error.main }}> *</Text>}
+                    </Text>
+                    {showCharacterCount && maxLength && (
+                        <Text style={[styles.characterCount, {
+                            color: characterCount > maxLength
+                                ? theme.colors.error.main
+                                : theme.colors.text.disabled
+                        }]}>
+                            {characterCount}/{maxLength}
+                        </Text>
+                    )}
+                </View>
+            )}
 
             <View style={[
-                styles.inputContainer,
-                { borderColor: error ? Theme.colors.error : isFocused ? Theme.colors.primary : Theme.colors.border },
-                isFocused && styles.inputFocused
+                styles.inputWrapper,
+                {
+                    borderColor,
+                    backgroundColor: editable ? theme.colors.background.paper : theme.colors.background.light,
+                    minHeight,
+                },
+                isMultiline && { alignItems: 'flex-start', paddingVertical: 12 },
+                isFocused && editable && styles.focusedShadow,
+                !editable && styles.disabledInput,
             ]}>
                 {iconName && (
-                    <Ionicons
+                    <Icon
                         name={iconName}
                         size={20}
-                        color={error ? Theme.colors.error : isFocused ? Theme.colors.primary : Theme.colors.textSecondary}
-                        style={styles.icon}
+                        color={iconColor}
+                        style={[styles.icon, isMultiline && { marginTop: 2 }]}
                     />
                 )}
 
                 <TextInput
                     secureTextEntry={hidePassword}
                     autoCorrect={false}
-                    onFocus={(e) => {
-                        onFocus?.(e);
-                        setIsFocused(true);
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={value}
+                    onChangeText={onChangeText}
+                    multiline={isMultiline}
+                    numberOfLines={numberOfLines}
+                    textAlignVertical={isMultiline ? 'top' : 'center'}
+                    maxLength={maxLength}
+                    editable={editable}
+                    style={[
+                        styles.input,
+                        { color: editable ? theme.colors.text.primary : theme.colors.text.disabled },
+                        inputStyleOverride,
+                    ]}
+                    placeholderTextColor={theme.colors.text.disabled}
+                    accessibilityLabel={label}
+                    accessibilityHint={helperText}
+                    accessibilityState={{
+                        disabled: !editable,
                     }}
-                    onBlur={(e) => {
-                        onBlur?.(e);
-                        setIsFocused(false);
-                    }}
-                    style={styles.input}
-                    placeholderTextColor={Theme.colors.gray}
                     {...props}
                 />
 
                 {password && (
-                    <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
-                        <Ionicons
+                    <TouchableOpacity
+                        onPress={togglePassword}
+                        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                        accessibilityLabel={hidePassword ? 'Show password' : 'Hide password'}
+                        accessibilityRole="button"
+                    >
+                        <Icon
                             name={hidePassword ? 'eye-off-outline' : 'eye-outline'}
                             size={20}
-                            color={Theme.colors.textSecondary}
+                            color={theme.colors.text.disabled}
                         />
                     </TouchableOpacity>
                 )}
+
+                {showSuccessIcon && (
+                    <Icon
+                        name="checkmark-circle"
+                        size={20}
+                        color={theme.colors.success?.main || '#10B981'}
+                        style={styles.statusIcon}
+                    />
+                )}
+
+                {showErrorIcon && (
+                    <Icon
+                        name="alert-circle"
+                        size={20}
+                        color={theme.colors.error.main}
+                        style={styles.statusIcon}
+                    />
+                )}
             </View>
 
-            {error && <Text style={styles.errorText}>{error}</Text>}
+            {helperText && !error && !successMessage && (
+                <Text style={[styles.helperText, { color: theme.colors.text.disabled }]}>
+                    {helperText}
+                </Text>
+            )}
+
+            {error && (
+                <View style={styles.messageContainer}>
+                    <Icon name="alert-circle-outline" size={14} color={theme.colors.error.main} />
+                    <Text style={[styles.errorText, { color: theme.colors.error.main }]}>{error}</Text>
+                </View>
+            )}
+
+            {successMessage && !error && (
+                <View style={styles.messageContainer}>
+                    <Icon name="checkmark-circle-outline" size={14} color={theme.colors.success?.main || '#10B981'} />
+                    <Text style={[styles.successText, { color: theme.colors.success?.main || '#10B981' }]}>
+                        {successMessage}
+                    </Text>
+                </View>
+            )}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: Theme.spacing.md,
+        marginBottom: 16,
         width: '100%',
     },
-    label: {
-        marginBottom: Theme.spacing.xs,
-        fontSize: Theme.typography.fontSize.sm,
-        fontWeight: Theme.typography.fontWeight.medium as any,
-        color: Theme.colors.text,
-    },
-    inputContainer: {
-        height: 56,
-        backgroundColor: Theme.colors.surface,
+    labelContainer: {
         flexDirection: 'row',
-        paddingHorizontal: Theme.spacing.md,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    label: {
+        fontSize: 14,
+        fontWeight: '600',
+        marginLeft: 4,
+    },
+    characterCount: {
+        fontSize: 12,
+        fontWeight: '500',
+    },
+    inputWrapper: {
+        flexDirection: 'row',
+        paddingHorizontal: 16,
         borderWidth: 1.5,
-        borderRadius: Theme.borderRadius.lg,
+        borderRadius: 14,
         alignItems: 'center',
     },
-    inputFocused: {
-        backgroundColor: Theme.colors.background,
-        shadowColor: Theme.colors.primary,
+    focusedShadow: {
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 2,
     },
+    disabledInput: {
+        opacity: 0.6,
+    },
     icon: {
-        marginRight: Theme.spacing.sm,
+        marginRight: 12,
     },
     input: {
-        color: Theme.colors.text,
         flex: 1,
-        height: '100%',
-        fontSize: Theme.typography.fontSize.base,
+        fontSize: 16,
+        paddingVertical: Platform.OS === 'android' ? 8 : 0,
+    },
+    statusIcon: {
+        marginLeft: 8,
+    },
+    messageContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 6,
+        marginLeft: 4,
+        gap: 6,
+    },
+    helperText: {
+        fontSize: 12,
+        marginTop: 6,
+        marginLeft: 4,
     },
     errorText: {
-        color: Theme.colors.error,
-        fontSize: Theme.typography.fontSize.xs,
-        marginTop: Theme.spacing.xs,
-        marginLeft: Theme.spacing.xs,
+        fontSize: 12,
+        flex: 1,
+    },
+    successText: {
+        fontSize: 12,
+        flex: 1,
     },
 });
 
 export default CustomInput;
+

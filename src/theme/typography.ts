@@ -1,12 +1,13 @@
-import { Platform } from 'react-native';
-
-export const TYPOGRAPHY = {
+export const typography = {
+    // Font Families
     fontFamily: {
-        regular: Platform.select({ ios: 'System', android: 'sans-serif' }),
-        medium: Platform.select({ ios: 'System', android: 'sans-serif-medium' }),
-        bold: Platform.select({ ios: 'System', android: 'sans-serif-bold' }),
-        semibold: Platform.select({ ios: 'System', android: 'sans-serif-medium' }), // Android fallback
+        regular: 'System',
+        medium: 'System',
+        semibold: 'System',
+        bold: 'System',
     },
+
+    // Font Sizes
     fontSize: {
         xs: 12,
         sm: 14,
@@ -16,18 +17,36 @@ export const TYPOGRAPHY = {
         '2xl': 24,
         '3xl': 30,
         '4xl': 36,
+        '5xl': 48,
+        '6xl': 60,
     },
-    fontWeight: {
-        light: '300',
-        regular: '400',
-        medium: '500',
-        semibold: '600',
-        bold: '700',
-        extraBold: '800',
-    },
+
+    // Line Heights
     lineHeight: {
         tight: 1.2,
         normal: 1.5,
         relaxed: 1.75,
-    }
+        loose: 2,
+    },
+
+    // Font Weights
+    fontWeight: {
+        normal: '400' as const,
+        medium: '500' as const,
+        semibold: '600' as const,
+        bold: '700' as const,
+        extrabold: '800' as const,
+    },
+
+    // Letter Spacing
+    letterSpacing: {
+        tighter: -0.5,
+        tight: -0.25,
+        normal: 0,
+        wide: 0.25,
+        wider: 0.5,
+        widest: 1,
+    },
 };
+
+export type Typography = typeof typography;

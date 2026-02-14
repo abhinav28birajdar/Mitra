@@ -1,19 +1,45 @@
-import { COLORS, DARK_COLORS } from './colors';
-import { TYPOGRAPHY } from './typography';
-import { SPACING, BORDER_RADIUS } from './spacing';
+import { colors, ColorPalette } from './colors';
+import { typography, Typography } from './typography';
+import { spacing, borderRadius, shadows, zIndex, Spacing, BorderRadius, Shadows, ZIndex } from './spacing';
 
-export {
-    COLORS,
-    DARK_COLORS,
-    TYPOGRAPHY,
-    SPACING,
-    BORDER_RADIUS,
+export interface Theme {
+    colors: ColorPalette;
+    typography: Typography;
+    spacing: Spacing;
+    borderRadius: BorderRadius;
+    shadows: Shadows;
+    zIndex: ZIndex;
+    isDark: boolean;
+}
+
+export const lightTheme: Theme = {
+    colors,
+    typography,
+    spacing,
+    borderRadius,
+    shadows,
+    zIndex,
+    isDark: false,
 };
 
-// Default Theme (Light)
-export const Theme = {
-    colors: COLORS,
-    typography: TYPOGRAPHY,
-    spacing: SPACING,
-    borderRadius: BORDER_RADIUS,
+export const darkTheme: Theme = {
+    ...lightTheme,
+    colors: {
+        ...colors,
+        background: {
+            light: colors.background.dark,
+            dark: colors.background.light,
+            paper: colors.background.darkPaper,
+            darkPaper: colors.background.paper,
+        },
+        text: {
+            primary: colors.text.light,
+            secondary: colors.gray[400],
+            disabled: colors.gray[600],
+            light: colors.text.primary,
+        },
+    },
+    isDark: true,
 };
+
+export { colors, colors as COLORS, typography, spacing, borderRadius, shadows, zIndex };

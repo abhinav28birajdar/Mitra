@@ -1,70 +1,220 @@
-# Mitra AI - Intelligent Career & Learning Ecosystem
+# Mitra AI - Ed-Tech Learning Platform
 
-<p align="center">
-  <img src="./assets/icon.jpg" alt="Mitra AI Logo" width="120px">
-</p>
+A comprehensive educational technology platform built with React Native, Expo, and Firebase.
 
-## 🚀 Status: Active Development
-**Mitra AI** is a production-grade ed-tech platform built with **React Native (Expo)** and **Appwrite**. We are actively migrating from a high-fidelity prototype to a robust, serverless architecture to power personalized AI career coaching and real-time learning tracking.
+## 🚀 Features
+
+### Authentication & Onboarding
+- ✅ Email/Password authentication
+- ✅ Google Sign-In integration
+- ✅ Password reset functionality
+- ✅ 5-step personalized onboarding flow
+  - Personal information
+  - Career interests selection
+  - Skills assessment
+  - Learning preferences
+  - Completion celebration
+
+### Core Features
+- 🎓 Personalized learning dashboard
+- 📚 Course catalog and exploration
+- 📊 Progress tracking and analytics
+- 🏆 Gamification (points, badges, streaks)
+- 👥 Community features
+- 💬 Real-time chat and messaging
+- 🎯 Career discovery and guidance
+- 🤖 AI-powered recommendations
 
 ## 🛠️ Tech Stack
 
-<p align="left">
-  <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React Native" />
-  <img src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white" alt="Expo" />
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Appwrite-FD366E?style=for-the-badge&logo=appwrite&logoColor=white" alt="Appwrite" />
-  <img src="https://img.shields.io/badge/NativeWind-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="NativeWind" />
-  <img src="https://img.shields.io/badge/Reanimated-FF5722?style=for-the-badge&logo=framer&logoColor=white" alt="Reanimated" />
-</p>
+- **Framework**: React Native with Expo SDK 54
+- **Language**: TypeScript
+- **Backend**: Firebase (Auth, Firestore, Storage, Functions, Analytics)
+- **State Management**: Zustand with Immer
+- **Navigation**: React Navigation v7
+- **Forms**: React Hook Form + Zod validation
+- **UI**: Custom components with theme system
+- **API Client**: Axios + React Query
 
-* **Frontend:** React Native with Expo (Managed Workflow)
-* **Language:** TypeScript
-* **Navigation:** React Navigation v6 (Deep Linking & Nested Stacks)
-* **Backend/Database:** Appwrite (Database, Auth, Storage)
-* **Authentication:** Appwrite Account API (Email/OTP & OAuth)
-* **Styling:** NativeWind (Tailwind CSS) & HSL Color Spaces
-* **Animations:** React Native Reanimated / Skia
+## 📦 Installation
+
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd MitraApp
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Set up environment variables**
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your Firebase credentials:
+```env
+FIREBASE_API_KEY=your-api-key
+FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+FIREBASE_APP_ID=your-app-id
+FIREBASE_MEASUREMENT_ID=your-measurement-id
+```
+
+4. **Add Firebase configuration files**
+- Place `google-services.json` in the project root (Android)
+- Place `GoogleService-Info.plist` in the project root (iOS)
+
+5. **Start the development server**
+```bash
+npm start
+```
+
+6. **Run on device/simulator**
+```bash
+# iOS
+npm run ios
+
+# Android
+npm run android
+```
+
+## 🏗️ Project Structure
+
+```
+MitraApp/
+├── src/
+│   ├── assets/          # Images, icons, fonts
+│   ├── components/      # Reusable UI components
+│   ├── context/         # React Context providers
+│   ├── firebase/        # Firebase configuration
+│   ├── hooks/           # Custom React hooks
+│   ├── navigation/      # Navigation configuration
+│   ├── screens/         # App screens
+│   │   ├── auth/        # Authentication screens
+│   │   ├── onboarding/  # Onboarding flow
+│   │   ├── home/        # Home screen
+│   │   ├── explore/     # Course exploration
+│   │   ├── learning/    # My learning
+│   │   ├── community/   # Community features
+│   │   └── profile/     # User profile
+│   ├── services/        # API and business logic
+│   ├── store/           # Zustand state stores
+│   ├── theme/           # Theme configuration
+│   ├── types/           # TypeScript type definitions
+│   └── utils/           # Utility functions
+├── App.tsx              # App entry point
+├── app.json             # Expo configuration
+├── package.json         # Dependencies
+└── tsconfig.json        # TypeScript configuration
+```
+
+## 🔥 Firebase Setup
+
+### 1. Create Firebase Project
+1. Go to [Firebase Console](https://console.firebase.google.com)
+2. Create a new project
+3. Enable Google Analytics (recommended)
+
+### 2. Enable Authentication
+1. Go to Authentication > Sign-in method
+2. Enable Email/Password
+3. Enable Google Sign-In
+
+### 3. Create Firestore Database
+1. Go to Firestore Database
+2. Create database in production mode
+3. Set up security rules (see `firebase/firestore.rules`)
+
+### 4. Enable Storage
+1. Go to Storage
+2. Get started
+3. Set up security rules (see `firebase/storage.rules`)
+
+### 5. Download Configuration Files
+- **Android**: Download `google-services.json`
+- **iOS**: Download `GoogleService-Info.plist`
+
+## 📱 Available Scripts
+
+```bash
+# Start development server
+npm start
+
+# Run on iOS
+npm run ios
+
+# Run on Android
+npm run android
+
+# Run tests
+npm test
+
+# Type checking
+npm run type-check
+
+# Linting
+npm run lint
+```
+
+## 🎨 Theme System
+
+The app includes a comprehensive theme system with:
+- Light and dark mode support
+- Customizable color palettes
+- Typography scale
+- Spacing system
+- Shadow presets
+- Border radius tokens
+
+## 🔐 Security
+
+- Firebase Authentication for secure user management
+- Firestore security rules for data protection
+- Storage rules for file access control
+- Environment variables for sensitive data
+
+## 📊 Database Schema
+
+### Collections
+- `users` - User accounts
+- `profiles` - User profiles and preferences
+- `careers` - Career information
+- `courses` - Course catalog
+- `lessons` - Course lessons
+- `enrollments` - User course enrollments
+- `progress` - Learning progress tracking
+- `notifications` - User notifications
+- `achievements` - Gamification achievements
+- `streaks` - Daily learning streaks
+
+## 🚧 Roadmap
+
+See [implementation_plan.md](./implementation_plan.md) for the complete development roadmap covering:
+- Core learning features
+- AI-powered recommendations
+- Live classes and webinars
+- Social and community features
+- Monetization and payments
+- Content creation tools
+- Advanced features (offline mode, multi-language, etc.)
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read the contributing guidelines before getting started.
+
+## 📞 Support
+
+For support, email support@mitraai.com or join our community Discord.
 
 ---
 
-## ⚙️ Core Functions & Modules
-
-### 🧠 The AI Engine (Career Coach)
-* **Smart Personalization:**
-    * **Multi-step Onboarding:** Algorithmic mapping of user goals, current skills, and interests.
-    * **Dynamic Dashboard:** Context-aware greeting and daily recommendation cards based on progress.
-* **Intelligent Interaction:**
-    * **AI Chat Interface:** Sophisticated chat UI for the "Mitra" career companion (Transitioning to API-driven).
-    * **Goal Tracking:** Real-time monitoring of career milestones and skill acquisition.
-
-### 🎓 Learning Management System (LMS)
-* **Course Architecture:**
-    * **Hierarchical Structure:** Organized flow of `Tracks` → `Modules` → `Lessons` → `Quizzes`.
-    * **Custom Video Player:** Optimized playback controls for course content.
-* **Assessment & Validation:**
-    * **Interactive Quizzes:** Immediate feedback loops (Correct/Incorrect states) with score calculation.
-    * **Certificate Generation:** Digital badge issuance stored via Appwrite Buckets.
-
-### 📊 Analytics & Gamification (User Growth)
-* **Visual Progress:**
-    * **Weekly Activity Charts:** Data visualization using `react-native-chart-kit`.
-    * **Skill Proficiency:** Radar charts to visualize strength areas.
-* **Engagement Loops:**
-    * **Streak Logic:** Tracks consecutive learning days to build habit.
-    * **Visual OTP:** A highly polished, interactive screen for secure authentication verification.
-
----
-
-## 🎯 Next Goals (Roadmap)
-- [ ] **AI Integration:** Connect Chat Interface to OpenAI/Gemini API via Appwrite Functions.
-- [ ] **Resume Parser:** Implement file upload to parse PDF resumes for auto-profiling.
-- [ ] **Offline Mode:** Implement `RxDB` or `WatermelonDB` for offline lesson access.
-- [ ] **Payment Gateway:** Integrate Stripe for Premium Course access.
-
----
-
-### 📂 View Latest Progress
-This branch focuses on the implementation of backend logic, Appwrite integration, and real-time functional components. To view the stable version or contribute:
-
-👉 **Check the [Main Branch](https://github.com/your-username/mitra-ai/tree/main)**
+**Built with ❤️ using React Native and Firebase**
