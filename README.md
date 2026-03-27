@@ -1,7 +1,7 @@
 # Mitra AI - Intelligent Career & Learning Ecosystem
 
 <p align="center">
-  <img src="./assets/icon.jpg" alt="Mitra AI Logo" width="120px">
+  <img src="/assets/images/icon.png" alt="Mitra AI Logo" width="120px">
 </p>
 
 ## 🎥 Mitra AI Demo
