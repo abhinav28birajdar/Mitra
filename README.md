@@ -5,7 +5,9 @@
 </p>
 
 ## 🎥 Mitra AI Demo
+
 https://github.com/user-attachments/assets/a9ae4479-e8bf-4503-9cb1-bf892c3e18fe 
+
 ---
 
 ## 🚀 Status: Active Development
