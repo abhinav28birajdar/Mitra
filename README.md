@@ -1,50 +1,71 @@
-# Welcome to your Expo app 👋
+# Mitra AI - Intelligent Career & Learning Ecosystem
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<p align="center">
+  <img src="./assets/icon.jpg" alt="Mitra AI Logo" width="120px">
+</p>
 
-## Get started
+## 🎥 Mitra AI Demo
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f83ac658-4862-444a-87a5-0f2b686c4ff0.gif" alt="Mitra AI Demo" width="500px">
+</p>
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 🚀 Status: Active Development
+**Mitra AI** is a production-grade ed-tech platform built with **React Native (Expo)** and **Appwrite**. We are actively migrating from a high-fidelity prototype to a robust, serverless architecture to power personalized AI career coaching and real-time learning tracking.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🛠️ Tech Stack
+<p align="left">
+  <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React Native" />
+  <img src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white" alt="Expo" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Appwrite-FD366E?style=for-the-badge&logo=appwrite&logoColor=white" alt="Appwrite" />
+  <img src="https://img.shields.io/badge/NativeWind-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="NativeWind" />
+  <img src="https://img.shields.io/badge/Reanimated-FF5722?style=for-the-badge&logo=framer&logoColor=white" alt="Reanimated" />
+</p>
 
-In the output, you'll find options to open the app in a
+- **Frontend:** React Native with Expo (Managed Workflow)  
+- **Language:** TypeScript  
+- **Navigation:** React Navigation v6 (Deep Linking & Nested Stacks)  
+- **Backend/Database:** Appwrite (Database, Auth, Storage)  
+- **Authentication:** Appwrite Account API (Email/OTP & OAuth)  
+- **Styling:** NativeWind (Tailwind CSS) & HSL Color Spaces  
+- **Animations:** React Native Reanimated / Skia  
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## ⚙️ Core Functions & Modules
 
-## Get a fresh project
+### 🧠 The AI Engine (Career Coach)
+- **Smart Personalization:**  
+  - Multi-step onboarding to map user goals, current skills, and interests  
+  - Dynamic dashboard with context-aware greetings and daily recommendations
+- **Intelligent Interaction:**  
+  - AI Chat interface for the “Mitra” career companion (API-driven)  
+  - Goal tracking with real-time monitoring of career milestones
 
-When you're ready, run:
+### 🎓 Learning Management System (LMS)
+- **Course Architecture:**  
+  - Hierarchical structure: `Tracks → Modules → Lessons → Quizzes`  
+  - Custom video player for course content
+- **Assessment & Validation:**  
+  - Interactive quizzes with immediate feedback and score calculation  
+  - Certificate generation stored via Appwrite Buckets
 
-```bash
-npm run reset-project
-```
+### 📊 Analytics & Gamification
+- **Visual Progress:**  
+  - Weekly activity charts using `react-native-chart-kit`  
+  - Radar charts for skill proficiency
+- **Engagement Loops:**  
+  - Streak logic to track consecutive learning days  
+  - Visual OTP for secure authentication verification
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🎯 Next Goals (Roadmap)
+- [ ] AI Integration: Connect Chat interface to OpenAI/Gemini API via Appwrite Functions  
+- [ ] Resume Parser: Implement PDF resume upload for auto-profiling  
+- [ ] Offline Mode: Integrate `RxDB` or `WatermelonDB` for offline lesson access  
+- [ ] Payment Gateway: Integrate Stripe for Premium course access  
