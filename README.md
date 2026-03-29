@@ -1,5 +1,14 @@
 # Mitra AI - Ed-Tech Learning Platform
 
+<p align="center">
+  <img src="/assets/images/icon.png" alt="Mitra AI Logo" width="120px">
+</p>
+
+## 🎥 Mitra AI Demo
+
+https://github.com/user-attachments/assets/a9ae4479-e8bf-4503-9cb1-bf892c3e18fe 
+
+---
 A comprehensive educational technology platform built with React Native, Expo, and Firebase.
 
 ## 🚀 Features
